@@ -4,6 +4,7 @@
   "description": "",
   "author": "",
   "dependencies": {
-    "blessed": "^0.1.61"
+    "blessed": "^0.1.61",
+    "commander": "^2.8.1"
   }
 }
