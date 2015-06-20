@@ -4,6 +4,6 @@
   "description": "",
   "author": "",
   "dependencies": {
-
+    "blessed": "^0.1.61"
   }
 }
