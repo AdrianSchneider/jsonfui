@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+'use strict';
+
+var fs       = require('fs');
+var path     = require('path');
+var program  = require('commander');
+var app      = require('../src/app');
+
+program
+  .option('-f --filename <filename>', 'THe filename to parse')
+  .parse(process.argv);
+
+if(!program.filename) {
+  console.error('No filename specified');
+  process.exit(1);
+}
+
+fs.readFile(path.resolve(process.cwd(), program.filename), function(err, content) {
+  var json = content.toString('utf-8');
+  var data = JSON.parse(json);
+  app(data);
+});
