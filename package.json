@@ -1,7 +1,7 @@
 {
-  "name": "foldson",
+  "name": "jsonfui",
   "version": "1.0.0",
-  "description": "An interactive command-line JSON viewer.",
+  "description": "An interactive command-line JSON viewer that supports folding.",
   "author": {
     "name": "Adrian Schneider",
     "url": "http://adrianschneider.ca/"
@@ -13,7 +13,7 @@
     "fold"
   ],
   "bin": {
-    "foldson": "./bin/foldson"
+    "jsonfui": "./bin/jsonfui"
   },
   "dependencies": {
     "blessed": "^0.1.61",
