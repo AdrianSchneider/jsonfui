@@ -1,10 +1,23 @@
 {
   "name": "foldson",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "An interactive command-line JSON viewer.",
+  "author": {
+    "name": "Adrian Schneider",
+    "url": "http://adrianschneider.ca/"
+  },
+  "keywords": [
+    "json",
+    "blessed",
+    "tui",
+    "fold"
+  ],
+  "bin": {
+    "foldson": "./bin/foldson"
+  },
   "dependencies": {
     "blessed": "^0.1.61",
     "commander": "^2.8.1"
-  }
+  },
+  "license": "MIT"
 }
