@@ -17,6 +17,30 @@ if(!program.filename) {
 
 fs.readFile(path.resolve(process.cwd(), program.filename), function(err, content) {
   var json = content.toString('utf-8');
-  var data = JSON.parse(json);
+
+  try {
+    var data = JSON.parse(json);
+  } catch (e) { }
+
+  if(!data) {
+    console.error('Input is not valid JSON');
+    process.exit(1);
+  }
+
+  if(data === null || typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
+    console.log(data);
+    process.exit(0);
+  }
+
+  if(Array.isArray(data) && !data.length) {
+    console.log('[] (empty array)');
+    process.exit(0);
+  }
+
+  if(!Array.isArray(data) && !Object.keys(data).length) {
+    console.log('{} (empty object)');
+    process.exit(0);
+  }
+
   app(data);
 });
