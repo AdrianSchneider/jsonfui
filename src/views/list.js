@@ -19,7 +19,7 @@ module.exports = function listView(data, parent) {
     selectedBg: 'green',
   });
 
-  list.key(['-'], function() {
+  list.key(['-', 'space'], function() {
     list.setItems(valueToList(data, parent.toggleExpansion()));
     list.render();
     parent.render();
