@@ -25,6 +25,11 @@ module.exports = function listView(data, parent) {
     parent.render();
   });
 
+  list.key(['*'], function(item, selected) {
+    console.error(list.items[list.selected].content);
+    parent.highlighted = data[list.selected];
+  });
+
   list.on('select', function(selected, index) {
     var children = (function() {
       if(Array.isArray(data)) {
