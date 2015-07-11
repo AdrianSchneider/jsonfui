@@ -105,6 +105,7 @@ function display(item, expand) {
 
   if(Array.isArray(item)) return '{blue-fg}[ (' + item.length + ') ]{/blue-fg}';
   if(typeof item === 'object' && Object.keys(item).length) return '{blue-fg}{ ... }{/blue-fg}';
+  if(typeof item === 'object') return '{blue-fg}{}{/blue-fg}';
 
   return item;
 }
