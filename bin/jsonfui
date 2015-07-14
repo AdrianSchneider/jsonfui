@@ -5,17 +5,19 @@ var fs       = require('fs');
 var path     = require('path');
 var program  = require('commander');
 var app      = require('../src/app');
+var config   = require('../package.json');
 
 program
-  .option('-f --filename <filename>', 'THe filename to parse')
+  .version(config.version)
+  .usage('<filename>')
   .parse(process.argv);
 
-if(!program.filename) {
-  console.error('No filename specified');
+if(!program.args[0]) {
+  program.outputHelp();
   process.exit(1);
 }
 
-fs.readFile(path.resolve(process.cwd(), program.filename), function(err, content) {
+fs.readFile(path.resolve(process.cwd(), program.args[0]), function(err, content) {
   var json = content.toString('utf-8');
 
   try {
