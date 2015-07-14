@@ -30,6 +30,6 @@ When the application is open, you are in an interactive [blessed](https://github
 `l`: enter (open node)  
 `<Enter>`: enter (open node)  
 `y` or `c`: copy current value to clipboard (OSX)  
-`-`: toggle expansion
-`*`: highlight current value
-`<space>`: clear highlight
+`-`: toggle expansion  
+`*`: highlight current value  
+`<space>`: clear highlight  
