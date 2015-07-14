@@ -14,11 +14,11 @@ And `jsonfui` will be available in your bin path.
 
 To start jsonfui, pass a filename to it:
 
-    jsonfui -f /path/to/file.json
+    jsonfui /path/to/file.json
 
 Since you'd typically want to pipe in data from another source, you can instead use process substition to treat the response from another process as a temporary file:
 
-    jsonfui -f <(curl -s http://your.api.com/users.json)
+    jsonfui <(curl -s http://your.api.com/users.json)
 
 When the application is open, you are in an interactive [blessed](https://github.com/chjj/blessed)-powered navigator.
 
@@ -31,4 +31,5 @@ When the application is open, you are in an interactive [blessed](https://github
 `<Enter>`: enter (open node)  
 `y` or `c`: copy current value to clipboard (OSX)  
 `-`: toggle expansion
-`-` or `Space`: toggle expansion
+`*`: highlight current value
+`<space>`: clear highlight
