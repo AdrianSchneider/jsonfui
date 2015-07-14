@@ -29,5 +29,14 @@ module.exports = function(log) {
     process.exit(0);
   });
 
+  screen.highlight = function(text) {
+    screen.highlighted = text;
+  };
+
+  screen.getHighlighted = function() {
+    return screen.highlighted;
+  };
+
+
   return screen;
 };

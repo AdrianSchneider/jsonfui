@@ -2,7 +2,7 @@
 
 var sprintf = require('util').format;
 
-module.exports = function(options) {
+module.exports = function(session) {
   return function(value) {
     if (value.isNull()) {
       return '{grey-fg}null{/grey-fg}';
@@ -26,7 +26,7 @@ module.exports = function(options) {
       return sprintf('{cyan-fg}%s{/cyan-fg}', value.getValue());
     }
 
-    if (options.expand && value.hasChildren()) {
+    if (session.getExpansion() && value.hasChildren()) {
       var out = value.toString();
       return '{blue-fg}' + out[0] + '{/blue-fg}' +
           '{blue-fg}' + out.substr(1).substr(0, out.length -2) + '{/blue-fg}' +

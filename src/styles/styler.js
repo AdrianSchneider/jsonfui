@@ -1,19 +1,41 @@
 'use strict';
 
-module.exports = function Styler(options, style) {
+module.exports = function Styler(session, style) {
 
   /**
    * Styles an object and returns an array of lines
    *
-   * @param {Array|Object} value
+   * @param {JsonValue} value
    * @return {Array<String>} styled lines
    */
   this.style = function(value) {
     var keys = value.getChildrenKeys();
-    var maxLength = getMaxLength(keys);
-    return keys.map(function(key) {
-      return pad(key, maxLength, ' ') + ' ' + style(value.getChild(keys.indexOf(key)));
+    var rows = keys.map(function(key) {
+      return {
+        key: key,
+        child: value.getChild(keys.indexOf(key)),
+        highlighted: session.isHighlighted(value.getChild(keys.indexOf(key)))
+      };
     });
+
+    var maxLength = getMaxLength(rows);
+    var highlighted = rows.filter(function(row) { return row.highlighted; }).length;
+
+    return rows.map(function(row) {
+      return pad(row.key, maxLength, ' ') + ' ' + star(row.child, highlighted) + style(row.child);
+    });
+  };
+
+  /**
+   * Renders the highlight star
+   *
+   * @param {JsonValue} value
+   * @param {Number} highlighted
+   * @return {String}
+   */
+  var star = function(value, highlighted) {
+    if (!highlighted) return '';
+    return session.isHighlighted(value) ? '{red-fg}* {/red-fg}' : '  ';
   };
 
   /**
@@ -24,7 +46,7 @@ module.exports = function Styler(options, style) {
    */
   var getMaxLength = function(keys) {
     return keys.reduce(function(max, current) {
-      max = Math.max(max, current.length);
+      max = Math.max(max, current.key.length);
       return max;
     }, 0);
   };

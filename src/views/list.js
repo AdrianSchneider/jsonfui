@@ -5,10 +5,10 @@ var Styler       = require('../styles/styler');
 var defaultStyle = require('../styles/default');
 var clipboard    = require('../clipboard')();
 
-module.exports = function listView(value, parent) {
+module.exports = function listView(value, session, parent) {
   var list = blessed.list({
     parent: parent,
-    items: getStyler(parent).style(value),
+    items: getStyler(session).style(value),
     tags: true,
     keys: true,
     vi: true,
@@ -23,11 +23,15 @@ module.exports = function listView(value, parent) {
 
   list.datasource = value;
 
-  list.key(['-', 'space'], function() {
-    parent.toggleExpansion();
-    list.setItems(getStyler(parent).style(value));
+  list.redraw = function() {
+    list.setItems(getStyler(session).style(value));
     list.render();
     parent.render();
+  };
+
+  list.key(['-'], function() {
+    session.toggleExpansion();
+    list.redraw();
   });
 
   list.on('select', function(selected, index) {
@@ -36,7 +40,7 @@ module.exports = function listView(value, parent) {
       return;
     }
 
-    var newList = listView(child, parent);
+    var newList = listView(child, session, parent);
     newList.key(['escape', 'h'], function() {
       parent.remove(newList);
       parent.render();
@@ -45,6 +49,17 @@ module.exports = function listView(value, parent) {
 
     newList.focus();
   });
+
+  list.key(['*'], function() {
+    session.highlight(list.datasource.getChild(list.selected).toString());
+    list.redraw();
+  });
+
+  list.key(['space'], function() {
+    session.highlight(null);
+    list.redraw();
+  });
+
 
   list.key(['c', 'y'], function(item, selected) {
     clipboard.copy(list.datasource.getChild(list.selected).toString(), function() {});
@@ -55,6 +70,6 @@ module.exports = function listView(value, parent) {
   return list;
 };
 
-function getStyler(parent) {
-  return new Styler({ expand: parent.getExpansion() }, defaultStyle({ expand: parent.getExpansion() }));
+function getStyler(session) {
+  return new Styler(session, defaultStyle(session));
 }
