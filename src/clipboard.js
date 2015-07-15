@@ -4,13 +4,14 @@ var spawn = require('child_process').spawn;
 
 module.exports = function() {
   return {
-    copy: function(text, done) {
+    copy: function(value, done) {
       var p = spawn('pbcopy');
-      p.stdin.write(text);
+      p.stdin.write(value.toString());
       p.stdin.end();
-      p.on('close', function() {
-        done();
-      });
+
+      if (done) {
+        p.on('close', function() { done(); });
+      }
     }
   };
 };

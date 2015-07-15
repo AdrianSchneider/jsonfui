@@ -4,11 +4,11 @@ var blessed      = require('blessed');
 var Styler       = require('../styles/styler');
 var defaultStyle = require('../styles/default');
 var clipboard    = require('../clipboard')();
+var List         = require('../widgets/list');
 
 module.exports = function listView(value, session, parent) {
-  var list = blessed.list({
+  var list = new List({
     parent: parent,
-    items: getStyler(session).style(value),
     tags: true,
     keys: true,
     vi: true,
@@ -18,29 +18,17 @@ module.exports = function listView(value, session, parent) {
     },
     selectedFg: 'black',
     selectedBg: 'green',
-    datasource: value
+    value: value,
+    session: session,
+    styler: new Styler(session, defaultStyle(session))
   });
 
-  list.datasource = value;
-
-  list.redraw = function() {
-    list.setItems(getStyler(session).style(value));
-    list.render();
-    parent.render();
-  };
-
-  list.key(['-'], function() {
-    session.toggleExpansion();
-    list.redraw();
-  });
-
-  list.on('select', function(selected, index) {
-    var child = list.datasource.getChild(list.selected);
-    if (!child.hasChildren()) {
+  list.on('selectValue', function(selected) {
+    if (!selected.hasChildren()) {
       return;
     }
 
-    var newList = listView(child, session, parent);
+    var newList = listView(selected, session, parent);
     newList.key(['escape', 'h'], function() {
       parent.remove(newList);
       parent.render();
@@ -50,26 +38,11 @@ module.exports = function listView(value, session, parent) {
     newList.focus();
   });
 
-  list.key(['*'], function() {
-    session.highlight(list.datasource.getChild(list.selected).toString());
-    list.redraw();
-  });
-
-  list.key(['space'], function() {
-    session.highlight(null);
-    list.redraw();
-  });
-
-
   list.key(['c', 'y'], function(item, selected) {
-    clipboard.copy(list.datasource.getChild(list.selected).toString(), function() {});
+    clipboard.copy(list.getSelectedValue());
   });
 
   parent.append(list);
   parent.render();
   return list;
 };
-
-function getStyler(session) {
-  return new Styler(session, defaultStyle(session));
-}

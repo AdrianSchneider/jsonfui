@@ -5,7 +5,7 @@ module.exports = function() {
   var expansion = false;
 
   this.highlight = function(value) {
-    highlighted = value;
+    highlighted = value.toString();
   };
 
   this.clearHighlight = function() {
