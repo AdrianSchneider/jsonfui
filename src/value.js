@@ -137,11 +137,12 @@ function JsonValue(val) {
    * @return {String}
    */
   this.toString = function() {
-    if(!this.canHaveChildren()) return val.toString();
-    return JSON.stringify(val);
+    if (this.canHaveChildren()) return JSON.stringify(val);
+    if (val === null) return 'null';
+    return val.toString();
   };
 
-  if(!this.getType()) {
+  if (!this.getType()) {
     throw new Error('Cannot determine type of value');
   }
 }
