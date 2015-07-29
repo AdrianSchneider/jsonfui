@@ -14,7 +14,10 @@ module.exports = function Styler(session, style) {
       return {
         key: key,
         child: value.getChild(keys.indexOf(key)),
-        highlighted: session.isHighlighted(value.getChild(keys.indexOf(key)))
+        highlighted: (
+          session.isHighlighted(key) ||
+          session.isHighlighted(value.getChild(keys.indexOf(key)))
+        )
       };
     });
 
@@ -22,7 +25,7 @@ module.exports = function Styler(session, style) {
     var highlighted = rows.filter(function(row) { return row.highlighted; }).length;
 
     return rows.map(function(row) {
-      return pad(row.key, maxLength, ' ') + ' ' + star(row.child, highlighted) + style(row.child);
+      return pad(row.key, maxLength, ' ') + ' ' + star(row.key, row.child, highlighted) + style(row.child);
     });
   };
 
@@ -33,9 +36,13 @@ module.exports = function Styler(session, style) {
    * @param {Number} highlighted
    * @return {String}
    */
-  var star = function(value, highlighted) {
+  var star = function(key, value, highlighted) {
     if (!highlighted) return '';
-    return session.isHighlighted(value) ? '{red-fg}* {/red-fg}' : '  ';
+    var isHighlighted = (
+      session.isHighlighted(key) ||
+      session.isHighlighted(value)
+    );
+    return isHighlighted ? '{red-fg}* {/red-fg}' : '  ';
   };
 
   /**
