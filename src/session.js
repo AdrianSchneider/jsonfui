@@ -12,6 +12,10 @@ module.exports = function() {
     highlighted = null;
   };
 
+  this.hasSearch = function() {
+    return !!highlighted;
+  };
+
   this.isHighlighted = function(value) {
     return highlighted !== null && value.toString().indexOf(highlighted) !== -1;
   };

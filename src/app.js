@@ -6,6 +6,6 @@ var screenView = require('./views/screen');
 var listView   = require('./views/list');
 
 module.exports = function(data) {
-  var list = listView(new Value(data), new Session(), screenView());
+  var list = listView(new Value(data, null), new Session(), screenView());
   list.focus();
 };

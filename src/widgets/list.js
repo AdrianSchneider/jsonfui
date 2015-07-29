@@ -63,17 +63,55 @@ function List(options) {
 
       if (text && text.length) {
         session.highlight(text);
+        nextResult();
         self.redraw();
       }
     });
   };
 
   var nextResult = function() {
+    if (!session.hasSearch()) return;
+    var searchResults = buildResultset();
+    if (!searchResults.length) return;
 
+    var resultIndex = searchResults.indexOf(self.selected + 1) + 1;
+    if (typeof searchResults[resultIndex] === 'undefined') resultIndex = 0;
+
+    self.select(searchResults[resultIndex] - 1);
+    self.render();
+    self.screen.render();
   };
 
   var prevResult = function() {
+    if (!session.hasSearch()) return;
+    var searchResults = buildResultset();
+    if (!searchResults.length) return;
 
+
+    var resultIndex = searchResults.indexOf(self.selected + 1) - 1;
+    console.error('before correction: ' + resultIndex);
+    if (typeof searchResults[resultIndex] === 'undefined') resultIndex = searchResults.length - 1;
+    console.error('after correction: ' + resultIndex);
+
+    self.select(searchResults[resultIndex] - 1);
+    self.render();
+    self.screen.render();
+  };
+
+  var buildResultset = function() {
+    return self.items
+      .map(function(row) {
+        return {
+          index: row.index,
+          value: value.getChild(row.index - 1)
+        };
+      })
+      .filter(function(row) {
+        return session.isHighlighted(row.value.getKey()) || session.isHighlighted(row.value);
+      })
+      .map(function(row) {
+        return row.index;
+      });
   };
 
   var emitSelectedValue = function(selected, index) {

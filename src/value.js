@@ -5,7 +5,7 @@
  *
  * @param {*} val
  */
-function JsonValue(val) {
+function JsonValue(val, key) {
   var state = {};
 
   /**
@@ -28,6 +28,15 @@ function JsonValue(val) {
    */
   this.getValue = function() {
     return val;
+  };
+
+  /**
+   * Gets the key of this item in the parent
+   *
+   * @return {String|number|null}
+   */
+  this.getKey = function() {
+    return key;
   };
 
   /**
@@ -125,10 +134,11 @@ function JsonValue(val) {
     }
 
     if (this.isArray()) {
-      return new JsonValue(val[index]);
+      return new JsonValue(val[index], index);
     }
 
-    return new JsonValue(val[Object.keys(val)[index]]);
+    var keys = Object.keys(val);
+    return new JsonValue(val[keys[index]], keys[index]);
   };
 
   /**
@@ -143,6 +153,7 @@ function JsonValue(val) {
   };
 
   if (!this.getType()) {
+    console.error(val);
     throw new Error('Cannot determine type of value');
   }
 }
