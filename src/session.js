@@ -13,7 +13,7 @@ module.exports = function() {
   };
 
   this.isHighlighted = function(value) {
-    return value.toString() === highlighted;
+    return highlighted !== null && value.toString() === highlighted;
   };
 
   this.getExpansion = function() {

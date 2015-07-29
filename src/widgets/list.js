@@ -83,7 +83,7 @@ function List(options) {
    * Clears the highlight
    */
   var clearHighlight = function() {
-    session.highlight('');
+    session.clearHighlight();
     self.redraw();
   };
 
