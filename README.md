@@ -31,7 +31,7 @@ When the application is open, you are in an interactive [blessed](https://github
 `<Enter>`: enter (open node)  
 `y` or `c`: copy current value to clipboard (OSX)  
 `-`: toggle expansion  
-`/`: search for string recursively
+`/`: search for string recursively  
 `*`: search for value under cursor  
 `n`: next search result at current depth  
 `N`: prev search result at current depth  
