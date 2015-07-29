@@ -99,18 +99,20 @@ function List(options) {
   };
 
   var buildResultset = function() {
+
     return self.items
       .map(function(row) {
+        var index = self.getItemIndex(row);
         return {
-          index: row.index,
-          value: value.getChild(row.index - 1)
+          index: index,
+          value: value.getChild(index)
         };
       })
       .filter(function(row) {
         return session.isHighlighted(row.value.getKey()) || session.isHighlighted(row.value);
       })
       .map(function(row) {
-        return row.index;
+        return row.index + 1;
       });
   };
 
