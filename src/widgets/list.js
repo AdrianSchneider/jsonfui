@@ -89,9 +89,7 @@ function List(options) {
 
 
     var resultIndex = searchResults.indexOf(self.selected + 1) - 1;
-    console.error('before correction: ' + resultIndex);
     if (typeof searchResults[resultIndex] === 'undefined') resultIndex = searchResults.length - 1;
-    console.error('after correction: ' + resultIndex);
 
     self.select(searchResults[resultIndex] - 1);
     self.render();
