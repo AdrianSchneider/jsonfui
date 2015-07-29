@@ -2,6 +2,7 @@
 
 var util    = require('util');
 var blessed = require('blessed');
+var searchWidget = require('../views/search');
 
 function List(options) {
   if(!options) options = {};
@@ -14,6 +15,7 @@ function List(options) {
   var value = options.value;
   var session = options.session;
   var styler = options.styler;
+  var search;
 
   /**
    * Sets things up
@@ -47,8 +49,23 @@ function List(options) {
     return value.getChild(self.selected);
   };
 
+  /**
+   * Triggers a small search dialog to open
+   * and highlights the entered text
+   */
   var openSearch = function() {
+    search = searchWidget(self.screen);
+    self.screen.render();
 
+    search.readInput(function(err, text) {
+      self.screen.remove(search);
+      self.screen.render();
+
+      if (text && text.length) {
+        session.highlight(text);
+        self.redraw();
+      }
+    });
   };
 
   var nextResult = function() {
