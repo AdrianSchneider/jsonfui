@@ -2,8 +2,8 @@
 
 var blessed = require('blessed');
 
-module.exports = function(log) {
-  var screen = blessed.screen();
+module.exports = function(input, output) {
+  var screen = blessed.screen({ input: input, output: output });
   screen.expandJSON = false;
 
   /**

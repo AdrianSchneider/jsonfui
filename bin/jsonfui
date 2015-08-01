@@ -4,6 +4,8 @@
 var fs       = require('fs');
 var path     = require('path');
 var program  = require('commander');
+var async    = require('async');
+var ttys     = require('ttys');
 var app      = require('../src/app');
 var config   = require('../package.json');
 
@@ -17,32 +19,53 @@ if(!program.args[0]) {
   process.exit(1);
 }
 
-fs.readFile(path.resolve(process.cwd(), program.args[0]), function(err, content) {
-  var json = content.toString('utf-8');
-
-  try {
-    var data = JSON.parse(json);
-  } catch (e) { }
-
-  if(!data) {
-    console.error('Input is not valid JSON');
+async.waterfall([
+  function readInput(next) {
+    var json = '';
+    var stream = getInputStream(resolveFilename(program.args[0]));
+    stream.on('data', function(data) { json += data.toString('utf-8'); });
+    stream.on('end', function() { next(null, json); });
+    stream.on('error', next);
+  },
+  function parseData(json, next) {
+    var data;
+    try { data = JSON.parse(json); } catch (e) { }
+    if (!data) return next(new Error('No data'));
+    next(null, data);
+  }
+], function(err, data) {
+  if (err) {
+    console.error(err.message);
     process.exit(1);
   }
 
-  if(data === null || typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
+  printIfNotRecursive(data);
+  app(data, ttys.stdin, process.stdout);
+});
+
+function resolveFilename(filename) {
+  if (filename === '-') return filename;
+  return path.resolve(process.cwd(), filename);
+}
+
+function getInputStream(filename) {
+  if (filename === '-') return process.stdin;
+  return fs.createReadStream(filename);
+}
+
+function printIfNotRecursive(data) {
+  if (data === null || typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
     console.log(data);
     process.exit(0);
   }
 
-  if(Array.isArray(data) && !data.length) {
+  if (Array.isArray(data) && !data.length) {
     console.log('[] (empty array)');
     process.exit(0);
   }
 
-  if(!Array.isArray(data) && !Object.keys(data).length) {
+  if (!Array.isArray(data) && !Object.keys(data).length) {
     console.log('{} (empty object)');
     process.exit(0);
   }
-
-  app(data);
-});
+}
