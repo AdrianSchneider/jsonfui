@@ -4,7 +4,6 @@
 var fs       = require('fs');
 var path     = require('path');
 var program  = require('commander');
-var async    = require('async');
 var ttys     = require('ttys');
 var app      = require('../src/app');
 var config   = require('../package.json');
@@ -19,29 +18,31 @@ if(!program.args[0]) {
   process.exit(1);
 }
 
-async.waterfall([
-  function readInput(next) {
-    var json = '';
-    var stream = getInputStream(resolveFilename(program.args[0]));
-    stream.on('data', function(data) { json += data.toString('utf-8'); });
-    stream.on('end', function() { next(null, json); });
-    stream.on('error', next);
-  },
-  function parseData(json, next) {
-    var data;
-    try { data = JSON.parse(json); } catch (e) { }
-    if (!data) return next(new Error('No data'));
-    next(null, data);
+var json = '';
+var stream = getInputStream(resolveFilename(program.args[0]));
+stream.on('data', function(data) { json += data.toString('utf-8'); });
+stream.on('end', start);
+stream.on('error', die);
+
+function start() {
+  try {
+    openApp(JSON.parse(json));
+  } catch (e) {
+    die(new Error('Invalid input JSON'));
   }
-], function(err, data) {
-  if (err) {
-    console.error(err.message);
+}
+
+function die(e) {
+  if (e) {
+    console.error(e.message);
     process.exit(1);
   }
+}
 
+function openApp(data) {
   printIfNotRecursive(data);
   app(data, ttys.stdin, process.stdout);
-});
+}
 
 function resolveFilename(filename) {
   if (filename === '-') return filename;

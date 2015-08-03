@@ -16,7 +16,6 @@
     "jsonfui": "./bin/jsonfui"
   },
   "dependencies": {
-    "async": "^1.4.0",
     "blessed": "^0.1.61",
     "commander": "^2.8.1",
     "ttys": "0.0.3"
