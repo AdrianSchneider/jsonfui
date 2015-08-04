@@ -4,6 +4,7 @@
 var fs       = require('fs');
 var path     = require('path');
 var program  = require('commander');
+var ttys     = require('ttys');
 var app      = require('../src/app');
 var config   = require('../package.json');
 
@@ -17,32 +18,55 @@ if(!program.args[0]) {
   process.exit(1);
 }
 
-fs.readFile(path.resolve(process.cwd(), program.args[0]), function(err, content) {
-  var json = content.toString('utf-8');
+var json = '';
+var stream = getInputStream(resolveFilename(program.args[0]));
+stream.on('data', function(data) { json += data.toString('utf-8'); });
+stream.on('end', start);
+stream.on('error', die);
 
+function start() {
   try {
-    var data = JSON.parse(json);
-  } catch (e) { }
+    openApp(JSON.parse(json));
+  } catch (e) {
+    die(new Error('Invalid input JSON'));
+  }
+}
 
-  if(!data) {
-    console.error('Input is not valid JSON');
+function die(e) {
+  if (e) {
+    console.error(e.message);
     process.exit(1);
   }
+}
 
-  if(data === null || typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
+function openApp(data) {
+  printIfNotRecursive(data);
+  app(data, ttys.stdin, process.stdout);
+}
+
+function resolveFilename(filename) {
+  if (filename === '-') return filename;
+  return path.resolve(process.cwd(), filename);
+}
+
+function getInputStream(filename) {
+  if (filename === '-') return process.stdin;
+  return fs.createReadStream(filename);
+}
+
+function printIfNotRecursive(data) {
+  if (data === null || typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
     console.log(data);
     process.exit(0);
   }
 
-  if(Array.isArray(data) && !data.length) {
+  if (Array.isArray(data) && !data.length) {
     console.log('[] (empty array)');
     process.exit(0);
   }
 
-  if(!Array.isArray(data) && !Object.keys(data).length) {
+  if (!Array.isArray(data) && !Object.keys(data).length) {
     console.log('{} (empty object)');
     process.exit(0);
   }
-
-  app(data);
-});
+}
