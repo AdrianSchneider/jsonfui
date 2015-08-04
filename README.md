@@ -16,9 +16,9 @@ To start jsonfui, pass a filename to it:
 
     jsonfui /path/to/file.json
 
-Since you'd typically want to pipe in data from another source, you can also denote reading from stdin with the `-` character:
+You can also read from stdin instead of a file:
 
-    curl -s https://api.github.com/users/adrianschneider/repos | jsonfui -
+    curl -s https://api.github.com/users/adrianschneider/repos | jsonfui
 
 When the application is open, you are in an interactive [blessed](https://github.com/chjj/blessed)-powered navigator.
 

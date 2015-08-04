@@ -10,10 +10,10 @@ var config   = require('../package.json');
 
 program
   .version(config.version)
-  .usage('<filename>')
+  .usage('<filename> (or read from stdin)')
   .parse(process.argv);
 
-if(!program.args[0]) {
+if(process.stdin.isTTY && !program.args[0]) {
   program.outputHelp();
   process.exit(1);
 }
@@ -22,7 +22,7 @@ var json = '';
 var stream = getInputStream(resolveFilename(program.args[0]));
 stream.on('data', function(data) { json += data.toString('utf-8'); });
 stream.on('end', start);
-stream.on('error', die);
+stream.on('error', function(err) { die(new Error('No file found at ' + program.args[0])); });
 
 function start() {
   try {
@@ -45,12 +45,12 @@ function openApp(data) {
 }
 
 function resolveFilename(filename) {
-  if (filename === '-') return filename;
+  if (!filename || filename === '-') return filename;
   return path.resolve(process.cwd(), filename);
 }
 
 function getInputStream(filename) {
-  if (filename === '-') return process.stdin;
+  if (!filename || filename === '-') return process.stdin;
   return fs.createReadStream(filename);
 }
 
