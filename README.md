@@ -36,3 +36,13 @@ When the application is open, you are in an interactive [blessed](https://github
 `n`: next search result at current depth  
 `N`: prev search result at current depth  
 `<space>`: clear highlight  
+
+## Examples
+
+## Reading from Standard In
+
+![Piped Content](./examples/jsonfui_curl.gif)
+
+## Reading from a File
+
+![Local File](./examples/jsonfui_local.gif)
