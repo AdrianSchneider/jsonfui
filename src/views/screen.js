@@ -3,7 +3,7 @@
 var blessed = require('blessed');
 
 module.exports = function(input, output) {
-  var screen = blessed.screen({ input: input, output: output });
+  var screen = blessed.screen({ input: input, output: output, fullUnicode: true });
   screen.expandJSON = false;
 
   /**
