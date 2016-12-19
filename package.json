@@ -1,6 +1,6 @@
 {
   "name": "jsonfui",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "An interactive command-line JSON viewer that supports folding.",
   "author": {
     "name": "Adrian Schneider",
