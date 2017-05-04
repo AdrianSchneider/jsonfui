@@ -1,6 +1,6 @@
 # JSON FUI
 
-jsonfui is a command-line JSON viewer.
+jsonfui is a command-line JSON viewer. [Examples](#examples)
 
 ## Installation
 
@@ -29,7 +29,7 @@ When the application is open, you are in an interactive [blessed](https://github
 `h`: go back/up one level  
 `l`: enter (open node)  
 `<Enter>`: enter (open node)  
-`y` or `c`: copy current value to clipboard (OSX)  
+`y` or `c`: copy current value to clipboard
 `-`: toggle expansion  
 `/`: search for string recursively  
 `*`: search for value under cursor  
@@ -39,10 +39,10 @@ When the application is open, you are in an interactive [blessed](https://github
 
 ## Examples
 
-## Reading from Standard In
+### Reading from Standard In
 
 ![Piped Content](./examples/jsonfui_curl.gif)
 
-## Reading from a File
+### Reading from a File
 
 ![Local File](./examples/jsonfui_local.gif)

@@ -4,7 +4,7 @@
   "description": "An interactive command-line JSON viewer that supports folding.",
   "author": {
     "name": "Adrian Schneider",
-    "url": "http://adrianschneider.ca/"
+    "email": "siradrian@gmail.com"
   },
   "keywords": [
     "json",
