@@ -39,7 +39,7 @@ module.exports = function listView(value, session, parent) {
   });
 
   list.key(['c', 'y'], function(item, selected) {
-    clipboard.copy(list.getSelectedValue());
+    clipboard.copy(list.getSelectedValue().toString());
   });
 
   parent.append(list);
