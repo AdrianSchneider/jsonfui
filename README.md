@@ -1,6 +1,6 @@
-# JSON FUI
+# jsonfui
 
-jsonfui is a command-line JSON viewer. [Examples](#examples)
+jsonfui is an interactive command-line JSON viewer. [Examples](#examples)
 
 ## Installation
 
