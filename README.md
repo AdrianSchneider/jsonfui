@@ -6,7 +6,7 @@ jsonfui is an interactive command-line JSON viewer. [Examples](#examples)
 
 ### Download Binary
 
-Download [latest release](ttps://github.com/AdrianSchneider/jsonfui/releases) from GitHub (does not require node.js).
+Download [latest release](https://github.com/AdrianSchneider/jsonfui/releases) from GitHub (does not require node.js).
 
 ### npm Release
 
