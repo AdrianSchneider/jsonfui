@@ -4,11 +4,17 @@ jsonfui is an interactive command-line JSON viewer. [Examples](#examples)
 
 ## Installation
 
-For the standalone application:
+### Download Binary
 
-    npm install -g jsonfui
+Download [latest release](ttps://github.com/AdrianSchneider/jsonfui/releases) from GitHub (does not require node.js).
 
-And `jsonfui` will be available in your bin path.
+### npm Release
+
+Or, install via npm (requires node.js):
+
+```
+npm install -g jsonfui
+```
 
 ## Usage
 
