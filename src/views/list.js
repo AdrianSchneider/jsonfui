@@ -3,7 +3,7 @@
 var blessed      = require('blessed');
 var Styler       = require('../styles/styler');
 var defaultStyle = require('../styles/default');
-var clipboard    = require('../clipboard')();
+var clipboard    = require('../clipboard')(process.platform);
 var List         = require('../widgets/list');
 
 module.exports = function listView(value, session, parent) {
@@ -39,7 +39,10 @@ module.exports = function listView(value, session, parent) {
   });
 
   list.key(['c', 'y'], function(item, selected) {
-    clipboard.copy(list.getSelectedValue().toString());
+    clipboard.copy(
+      list.getSelectedValue().toString(),
+      function(){}
+    );
   });
 
   parent.append(list);
