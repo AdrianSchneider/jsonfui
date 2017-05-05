@@ -15,6 +15,16 @@
   "bin": {
     "jsonfui": "./bin/jsonfui"
   },
+  "pkg": {
+    "scripts": [
+      "src/**/*.js",
+      "bin/**/*",
+      "node_modules/**/*.js"
+    ],
+    "assets": [
+      "node_modules/**/*"
+    ]
+  },
   "dependencies": {
     "blessed": "^0.1.61",
     "commander": "^2.8.1",
