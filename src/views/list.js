@@ -12,6 +12,7 @@ module.exports = function listView(value, session, parent) {
     tags: true,
     keys: true,
     vi: true,
+    height: '100%-1',
     border: {
       type: 'line',
       fg: 'lightblack'
@@ -23,6 +24,18 @@ module.exports = function listView(value, session, parent) {
     styler: new Styler(session, defaultStyle(session))
   });
 
+  list.path = blessed.box({
+    left: 1,
+    bottom: 0,
+    height: 1,
+    content: 'Path: ' + value.getParents().join('.'),
+    style: { fg: 'white' }
+  });
+
+  if (!value.getParents().length) {
+    list.path.hide();
+  }
+
   list.on('selectValue', function(selected) {
     if (!selected.hasChildren()) {
       return;
@@ -30,8 +43,10 @@ module.exports = function listView(value, session, parent) {
 
     var newList = listView(selected, session, parent);
     newList.key(['escape', 'h'], function() {
+      newList.screen.remove(newList.path);
       parent.remove(newList);
       parent.render();
+      newList.destroy();
       newList.destroy();
     });
 
@@ -46,6 +61,11 @@ module.exports = function listView(value, session, parent) {
   });
 
   parent.append(list);
+  parent.append(list.path);
   parent.render();
+
+  list.screen.render();
+  list.focus();
+
   return list;
 };
