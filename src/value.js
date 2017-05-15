@@ -145,7 +145,7 @@ function JsonValue(val, key, parents) {
     }
 
     if (this.isArray()) {
-      return new JsonValue(val[index], index, parents.concat([index]));
+      return new JsonValue(val[index], index, parents.concat(['[' + index + ']']));
     }
 
     var keys = Object.keys(val);
