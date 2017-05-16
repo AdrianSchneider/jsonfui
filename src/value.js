@@ -4,8 +4,10 @@
  * Represents a JSON value
  *
  * @param {*} val
+ * @param {String} key
+ * @param {String[]} parents
  */
-function JsonValue(val, key) {
+function JsonValue(val, key, parents) {
   var state = {};
 
   /**
@@ -37,6 +39,15 @@ function JsonValue(val, key) {
    */
   this.getKey = function() {
     return key;
+  };
+
+  /**
+   * Gets the list of parent keys
+   *
+   * @return {String[]}
+   */
+  this.getParents = function() {
+    return parents;
   };
 
   /**
@@ -134,11 +145,11 @@ function JsonValue(val, key) {
     }
 
     if (this.isArray()) {
-      return new JsonValue(val[index], index);
+      return new JsonValue(val[index], index, parents.concat(['[' + index + ']']));
     }
 
     var keys = Object.keys(val);
-    return new JsonValue(val[keys[index]], keys[index]);
+    return new JsonValue(val[keys[index]], keys[index], parents.concat([keys[index]]));
   };
 
   /**
