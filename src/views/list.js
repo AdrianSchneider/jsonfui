@@ -23,6 +23,13 @@ module.exports = function listView(value, session, parent) {
     styler: new Styler(session, defaultStyle(session))
   });
 
+  list.key('o', function() {
+    var output = list.getSelectedValue().toString();
+    list.screen.destroy();
+    console.log(output);
+    process.exit(0);
+  });
+
   list.on('selectValue', function(selected) {
     if (!selected.hasChildren()) {
       return;

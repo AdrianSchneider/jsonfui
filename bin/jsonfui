@@ -44,7 +44,7 @@ function die(e) {
 
 function openApp(data) {
   printIfNotRecursive(data);
-  app(data, ttys.stdin, process.stdout);
+  app(data, ttys.stdin, ttys.stdout);
 }
 
 function resolveFilename(filename) {
