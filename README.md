@@ -26,7 +26,12 @@ You can also read from stdin instead of a file:
 
     curl -s https://api.github.com/users/adrianschneider/repos | jsonfui
 
-When the application is open, you are in an interactive [blessed](https://github.com/chjj/blessed)-powered navigator.
+You can also write to stdout with `o`:
+
+    # list repos, pick one, view on github
+    curl -s https://api.github.com/users/adrianschneider/repos | jsonfui | xargs open
+
+When the application is open, you are in a vim-style tree viewer.
 
 ### Hotkeys (vim mode)
 
