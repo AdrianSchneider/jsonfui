@@ -36,6 +36,7 @@ When the application is open, you are in an interactive [blessed](https://github
 `l`: enter (open node)  
 `<Enter>`: enter (open node)  
 `y` or `c`: copy current value to clipboard
+`o`: send current selection to stdout and exit
 `-`: toggle expansion  
 `/`: search for string recursively  
 `*`: search for value under cursor  
