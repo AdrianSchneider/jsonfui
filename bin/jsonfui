@@ -25,11 +25,14 @@ stream.on('end', start);
 stream.on('error', function(err) { die(new Error('No file found at ' + program.args[0])); });
 
 function start() {
+  var input;
   try {
-    openApp(JSON.parse(json));
+    input = JSON.parse(json);
   } catch (e) {
     die(new Error('Invalid input JSON'));
   }
+
+  openApp(input);
 }
 
 function die(e) {
