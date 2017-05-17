@@ -26,7 +26,7 @@ You can also read from stdin instead of a file:
 
     curl -s https://api.github.com/users/adrianschneider/repos | jsonfui
 
-You can also write to stdout with `o`:
+You can also write to stdout with `Enter`:
 
     # list repos, pick one, view on github
     curl -s https://api.github.com/users/adrianschneider/repos | jsonfui | xargs open
@@ -35,19 +35,18 @@ When the application is open, you are in a vim-style tree viewer.
 
 ### Hotkeys (vim mode)
 
-`j`: down  
-`k`: up  
-`h`: go back/up one level  
-`l`: enter (open node)  
-`<Enter>`: enter (open node)  
+`down`, `j`: down
+`up`, `k`: up
+`left`, `h`: go back/up one level
+`right`, `l`: view child node
+`<Enter>`: send current selection to stdout and exit
 `y` or `c`: copy current value to clipboard
-`o`: send current selection to stdout and exit
-`-`: toggle expansion  
-`/`: search for string recursively  
-`*`: search for value under cursor  
-`n`: next search result at current depth  
-`N`: prev search result at current depth  
-`<space>`: clear highlight  
+`-`: toggle expansion
+`/`: search for string recursively
+`*`: search for value under cursor
+`n`: next search result at current depth
+`N`: prev search result at current depth
+`<space>`: clear highlight
 
 ## Examples
 

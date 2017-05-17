@@ -115,6 +115,7 @@ function List(options) {
   };
 
   var emitSelectedValue = function(selected, index) {
+    console.error('emit selected');
     self.emit('selectValue', self.getSelectedValue());
   };
 
