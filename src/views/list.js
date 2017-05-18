@@ -23,19 +23,30 @@ module.exports = function listView(value, session, parent) {
     styler: new Styler(session, defaultStyle(session))
   });
 
+  list.key(['enter'], function() {
+    var output = list.getSelectedValue().toString();
+    list.screen.destroy();
+    console.log(output);
+    process.exit(0);
+  });
+
   list.on('selectValue', function(selected) {
     if (!selected.hasChildren()) {
       return;
     }
 
     var newList = listView(selected, session, parent);
-    newList.key(['escape', 'h'], function() {
+    newList.key(['left', 'escape', 'h'], function() {
       parent.remove(newList);
       parent.render();
       newList.destroy();
     });
 
     newList.focus();
+  });
+
+  list.key(['right'], function(item, selected) {
+    list.enterSelected();
   });
 
   list.key(['c', 'y'], function(item, selected) {
