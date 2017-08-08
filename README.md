@@ -35,18 +35,18 @@ When the application is open, you are in a vim-style tree viewer.
 
 ### Hotkeys (vim mode)
 
-`down`, `j`: down
-`up`, `k`: up
-`left`, `h`: go back/up one level
-`right`, `l`: view child node
-`<Enter>`: send current selection to stdout and exit
-`y` or `c`: copy current value to clipboard
-`-`: toggle expansion
-`/`: search for string recursively
-`*`: search for value under cursor
-`n`: next search result at current depth
-`N`: prev search result at current depth
-`<space>`: clear highlight
+`down`, `j`: down  
+`up`, `k`: up  
+`left`, `h`: go back/up one level  
+`right`, `l`: view child node  
+`<Enter>`: send current selection to stdout and exit  
+`y` or `c`: copy current value to clipboard  
+`-`: toggle expansion  
+`/`: search for string recursively  
+`*`: search for value under cursor  
+`n`: next search result at current depth  
+`N`: prev search result at current depth  
+`<space>`: clear highlight  
 
 ## Examples
 
