@@ -41,6 +41,7 @@ When the application is open, you are in a vim-style tree viewer.
 `right`, `l`: view child node  
 `<Enter>`: send current selection to stdout and exit  
 `y` or `c`: copy current value to clipboard  
+`p`: copy path to current selection to clipboard
 `-`: toggle expansion  
 `/`: search for string recursively  
 `*`: search for value under cursor  

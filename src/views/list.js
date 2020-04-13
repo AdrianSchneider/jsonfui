@@ -6,7 +6,7 @@ var defaultStyle = require('../styles/default');
 var clipboard    = require('../clipboard')(process.platform);
 var List         = require('../widgets/list');
 
-module.exports = function listView(value, session, parent) {
+module.exports = function listView(value, session, parent, breadcrumbs) {
   var list = new List({
     parent: parent,
     tags: true,
@@ -35,7 +35,8 @@ module.exports = function listView(value, session, parent) {
       return;
     }
 
-    var newList = listView(selected, session, parent);
+    var newBreadcrumbs = breadcrumbs.concat([selected.getKey()]);
+    var newList = listView(selected, session, parent, newBreadcrumbs);
     newList.key(['left', 'escape', 'h'], function() {
       parent.remove(newList);
       parent.render();
@@ -52,6 +53,18 @@ module.exports = function listView(value, session, parent) {
   list.key(['c', 'y'], function(item, selected) {
     clipboard.copy(
       list.getSelectedValue().toString(),
+      function(){}
+    );
+  });
+
+  list.key(['p'], function() {
+    var selected = list.getSelectedValue();
+    var newBreadcrumbs = breadcrumbs.concat([selected.getKey()]);
+    var breadcrumbsString =  newBreadcrumbs.map(function(p) {
+      return typeof(p) == 'number' ? '[' + p + ']' : '["' + p + '"]';
+    }).join('')
+    clipboard.copy(
+      breadcrumbsString,
       function(){}
     );
   });
